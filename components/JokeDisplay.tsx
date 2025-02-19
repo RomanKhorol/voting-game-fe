@@ -1,18 +1,14 @@
 import { JokeType } from "@/models/jokeType";
 import VoteButtons from "./VoteButtons";
-import { getRandomJoke } from "@/utils/getRandomJoke";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 async function getJoke(): Promise<JokeType> {
   try {
-    const response = await fetch("http://localhost:5000/api/jokes");
+    const response = await fetch(`${apiUrl}/joke`);
     if (!response.ok) {
       throw new Error("Failed to fetch jokes");
     }
-    const jokes = await response.json();
-    const randomJoke = getRandomJoke(jokes);
-    return {
-      ...randomJoke,
-      votes: randomJoke.votes ?? [],
-    };
+    const joke: JokeType = await response.json(); 
+    return joke;
   } catch (error) {
     if (error instanceof Error) {
       throw error;
