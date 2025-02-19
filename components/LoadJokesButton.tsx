@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-
+import { toast } from 'react-toastify'
 
 export default function LoadJokesButton() {
   const [loading, setLoading] = useState(false)
@@ -27,10 +27,10 @@ export default function LoadJokesButton() {
 
       setMessage(data.message)
       
-      
+      toast.success('New jokes have loaded !!!')
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : 'Неизвестная ошибка')
-     
+      
+     toast.error(error instanceof Error ? error.message : 'Unknown error')
     } finally {
       setLoading(false)
     }
@@ -45,7 +45,7 @@ export default function LoadJokesButton() {
       >
         {loading ? 'Загружаем...' : 'Load More Jokes'}
       </button>
-      {message && <p className="mt-2 text-sm text-gray-600">{message}</p>}
+      
     </div>
   )
 }
