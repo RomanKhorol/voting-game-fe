@@ -9,11 +9,15 @@ async function fetchJoke() {
 }
 
 export async function loadJokes(count: number) {
-  const jokes = new Set(); 
+  const jokes = new Map<string, { question: string; answer: string }>();
+
   while (jokes.size < count) {
     const joke = await fetchJoke();
-    const jokeKey = `${joke.question}|${joke.answer}`; 
-    jokes.add(jokeKey);
+
+    if (!jokes.has(joke.id)) {
+      jokes.set(joke.id, { question: joke.question, answer: joke.answer });
+    }
   }
-  return Array.from(jokes);
+
+  return Array.from(jokes.values());
 }
