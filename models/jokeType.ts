@@ -7,7 +7,7 @@ export interface votesType {
 
 
 export interface JokeType {
-  id: string;
+  _id: string;
   question: string;
   answer: string;
   votes: votesType[];

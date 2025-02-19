@@ -13,17 +13,18 @@ async function getJoke(): Promise<JokeType> {
     if (error instanceof Error) {
       throw error;
     }
-    return { id: "", question: "", answer: "", votes: [] };
+    return { _id: "", question: "", answer: "", votes: [] };
   }
 }
 
 export default async function JokeDisplay() {
   const joke = await getJoke();
+  
   return (
     <div className="joke-container">
       <h2>{joke.question}</h2>
       <p>{joke.answer}</p>
-      <VoteButtons votes={joke.votes} id={joke.id} />
+      <VoteButtons votes={joke.votes} id={joke._id} />
     </div>
   );
 };

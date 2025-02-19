@@ -18,11 +18,10 @@ export async function GET() {
 
     const randomJoke = getRandomJoke(jokes);
     return new Response(JSON.stringify(randomJoke), { status: 200 });
+
   } catch (error) {
     console.error("Error fetching jokes:", error);
-    return new Response(JSON.stringify({ message: "Internal server error" }), {
-      status: 500,
-    });
+    return new Response(JSON.stringify({ message: "Internal server error" }), { status: 500 });
   }
 }
 
