@@ -1,13 +1,16 @@
-import { JokeType } from "@/models/jokeType";
-import React from 'react'
-import VoteButtons from "./VoteButtons";
-import LoadJokesButton from "./LoadJokesButton";
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { JokeType } from "@/models/jokeType"
+import React from "react"
+import VoteButtons from "./VoteButtons"
+import LoadJokesButton from "./LoadJokesButton"
+const apiUrl = process.env.NEXT_PUBLIC_API_URL
 async function getJoke(): Promise<JokeType> {
   try {
-    const response = await fetch(`${apiUrl}/joke`)
+    const response = await fetch(`${apiUrl}/joke`, {
+      cache: "no-store",
+      next: { revalidate: 0 },
+    })
     if (!response.ok) {
-      throw new Error('Failed to fetch jokes')
+      throw new Error("Failed to fetch jokes")
     }
     const joke: JokeType = await response.json()
     return joke
@@ -15,12 +18,12 @@ async function getJoke(): Promise<JokeType> {
     if (error instanceof Error) {
       throw error
     }
-    return { _id: '', question: '', answer: '', votes: [] }
+    return { _id: "", question: "", answer: "", votes: [] }
   }
 }
 
 export default async function JokeDisplay() {
-  let currentJoke = await getJoke()
+  const currentJoke = await getJoke()
 
   if (!currentJoke) {
     return (
@@ -44,6 +47,3 @@ export default async function JokeDisplay() {
     </div>
   )
 }
-
-
-

@@ -1,43 +1,42 @@
 export async function DELETE(
   req: Request,
-  { params }: { params: { jokeid: string } }
+  { params }: { params: Promise<{ jokeid: string }> }
 ) {
-   
-    const { jokeid } = await params;
+  const { jokeid } = await params
   try {
-    const response = await fetch(`http://localhost:5000/api/jokes/${jokeid}`,
-      {
-        method: "DELETE",
-      }
-    );
+    const response = await fetch(`http://localhost:5000/api/jokes/${jokeid}`, {
+      method: "DELETE",
+    })
 
-      if (!response.ok) {
-        
-      throw new Error(`Failed to delete joke: ${response.statusText}`);
+    if (!response.ok) {
+      throw new Error(`Failed to delete joke: ${response.statusText}`)
     }
 
     return new Response(
       JSON.stringify({ message: "Joke deleted successfully" }),
       { status: 200 }
-    );
+    )
   } catch (error) {
-    console.error("Error deleting joke:", error);
+    console.error("Error deleting joke:", error)
     return new Response(JSON.stringify({ message: "Internal server error" }), {
       status: 500,
-    });
+    })
   }
 }
-export async function PATCH(req: Request, { params }: { params: { jokeid: string } }) {
-  const { jokeid } = await params;
+export async function PATCH(
+  req: Request,
+  { params }: { params: Promise<{ jokeid: string }> }
+) {
+  const { jokeid } = await params
   try {
-    const body = await req.json();
-    const { votes } = body;
+    const body = await req.json()
+    const { votes } = body
 
     if (!Array.isArray(votes)) {
       return new Response(
         JSON.stringify({ message: "Votes must be an array" }),
         { status: 400 }
-      );
+      )
     }
 
     const response = await fetch(
@@ -49,18 +48,18 @@ export async function PATCH(req: Request, { params }: { params: { jokeid: string
         },
         body: JSON.stringify({ votes }),
       }
-    );
+    )
 
     if (!response.ok) {
-      throw new Error(`Failed to update votes: ${response.statusText}`);
+      throw new Error(`Failed to update votes: ${response.statusText}`)
     }
 
-    const updatedJoke = await response.json();
-    return new Response(JSON.stringify(updatedJoke), { status: 200 });
+    const updatedJoke = await response.json()
+    return new Response(JSON.stringify(updatedJoke), { status: 200 })
   } catch (error) {
-    console.error("Error updating votes:", error);
+    console.error("Error updating votes:", error)
     return new Response(JSON.stringify({ message: "Internal server error" }), {
       status: 500,
-    });
+    })
   }
 }

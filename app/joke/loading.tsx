@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 const LoadingHome = () => {
   return (
@@ -7,6 +7,6 @@ const LoadingHome = () => {
         Loading Next Joke...
       </h1>
     </div>
-  );
-};
-export default LoadingHome;
+  )
+}
+export default LoadingHome

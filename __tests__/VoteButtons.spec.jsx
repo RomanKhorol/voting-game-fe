@@ -1,9 +1,9 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import VoteButtons from '../components/VoteButtons'
-import CustomBtn from '../components/CustomBtn'
-import { useRouter } from 'next/navigation'
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"
+import VoteButtons from "../components/VoteButtons"
+import CustomBtn from "../components/CustomBtn"
+import { useRouter } from "next/navigation"
 
-jest.mock('../components/CustomBtn', () =>
+jest.mock("../components/CustomBtn", () =>
   jest.fn(({ vote, onClick }) => (
     <button
       data-testid={`vote-btn-${vote._id}`}
@@ -14,7 +14,7 @@ jest.mock('../components/CustomBtn', () =>
   ))
 )
 
-jest.mock('next/navigation', () => ({
+jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }))
 
@@ -25,10 +25,10 @@ global.fetch = jest.fn(() =>
   })
 )
 
-describe('VoteButtons', () => {
+describe("VoteButtons", () => {
   const mockVotes = [
-    { _id: '1', emoji: '😂', value: 5 },
-    { _id: '2', emoji: '👍', value: 3 },
+    { _id: "1", emoji: "😂", value: 5 },
+    { _id: "2", emoji: "👍", value: 3 },
   ]
   const mockRouter = { refresh: jest.fn() }
 
@@ -37,42 +37,42 @@ describe('VoteButtons', () => {
     fetch.mockClear()
   })
 
-  test('отрисовывает кнопки голосования', () => {
+  test("отрисовывает кнопки голосования", () => {
     render(<VoteButtons votes={mockVotes} id="joke-123" />)
 
-    expect(screen.getByTestId('vote-btn-1')).toBeInTheDocument()
-    expect(screen.getByTestId('vote-btn-2')).toBeInTheDocument()
+    expect(screen.getByTestId("vote-btn-1")).toBeInTheDocument()
+    expect(screen.getByTestId("vote-btn-2")).toBeInTheDocument()
   })
 
-  test('изменяет значение голоса при нажатии', async () => {
+  test("изменяет значение голоса при нажатии", async () => {
     render(<VoteButtons votes={mockVotes} id="joke-123" />)
 
-    const voteButton = screen.getByTestId('vote-btn-1')
+    const voteButton = screen.getByTestId("vote-btn-1")
 
     fireEvent.click(voteButton)
 
     await waitFor(() => {
-      expect(voteButton).toHaveTextContent('6')
+      expect(voteButton).toHaveTextContent("6")
     })
 
     fireEvent.click(voteButton)
 
     await waitFor(() => {
-      expect(voteButton).toHaveTextContent('5')
+      expect(voteButton).toHaveTextContent("5")
     })
   })
 
   test("отправляет запрос при нажатии 'Next Joke'", async () => {
     render(<VoteButtons votes={mockVotes} id="joke-123" />)
 
-    fireEvent.click(screen.getByText('Next Joke'))
+    fireEvent.click(screen.getByText("Next Joke"))
 
     await waitFor(() => {
       expect(fetch).toHaveBeenCalledWith(
-        expect.stringContaining('/joke/joke-123'),
+        expect.stringContaining("/joke/joke-123"),
         expect.objectContaining({
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
         })
       )
     })

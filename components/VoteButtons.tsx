@@ -1,16 +1,14 @@
+"use client"
 
-"use client";
-
-import { useRouter } from 'next/navigation'
-import { votesType } from "@/models/jokeType";
-import React, {  useEffect, useState } from "react";
-import CustomBtn from "./CustomBtn";
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { useRouter } from "next/navigation"
+import { votesType } from "@/models/jokeType"
+import React, { useEffect, useState } from "react"
+import CustomBtn from "./CustomBtn"
+const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
 interface VoteButtonsProps {
   id: string
   votes: votesType[]
-  
 }
 
 const VoteButtons: React.FC<VoteButtonsProps> = ({ votes, id }) => {
@@ -18,9 +16,9 @@ const VoteButtons: React.FC<VoteButtonsProps> = ({ votes, id }) => {
   const [selectedVoteId, setSelectedVoteId] = useState<string | null>(null)
   useEffect(() => {
     setVotes(votes)
-    setSelectedVoteId(null) 
+    setSelectedVoteId(null)
   }, [votes])
-const router = useRouter()
+  const router = useRouter()
   const handleVote = (voteId: string) => {
     setVotes((prevVotes) =>
       prevVotes.map((vote) => {
@@ -43,18 +41,17 @@ const router = useRouter()
   const handleSubmit = async (id: string) => {
     try {
       const response = await fetch(`${apiUrl}/joke/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ votes: votesState }),
       })
 
       if (!response.ok) {
-        console.log('Cannot update joke votes')
+        console.log("Cannot update joke votes")
         const error = await response.json()
-        throw new Error(error.error || 'Cannot update joke votes')
+        throw new Error(error.error || "Cannot update joke votes")
       }
       router.refresh()
-      
     } catch (error) {
       console.log(error)
     }
@@ -81,4 +78,4 @@ const router = useRouter()
   )
 }
 
-export default VoteButtons;
+export default VoteButtons
