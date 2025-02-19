@@ -1,5 +1,6 @@
 import { votesType } from '@/models/jokeType'
 import { FC } from 'react'
+import React from 'react'
 
 interface Props {
   vote: votesType

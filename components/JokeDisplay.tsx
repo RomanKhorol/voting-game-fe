@@ -1,5 +1,5 @@
 import { JokeType } from "@/models/jokeType";
-
+import React from 'react'
 import VoteButtons from "./VoteButtons";
 import LoadJokesButton from "./LoadJokesButton";
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;

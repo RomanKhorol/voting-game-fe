@@ -1,17 +1,16 @@
 'use client'
-
+import React from 'react'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 
 export default function LoadJokesButton() {
   const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState('')
-  const router = useRouter()
+  
 
   const loadJokes = async () => {
     setLoading(true)
-    setMessage('')
+    
     const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
     try {
@@ -25,7 +24,7 @@ export default function LoadJokesButton() {
         throw new Error(data.message || 'Ошибка загрузки шуток')
       }
 
-      setMessage(data.message)
+      
       
       toast.success('New jokes have loaded !!!')
     } catch (error) {

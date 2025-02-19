@@ -1,5 +1,6 @@
 
 "use client";
+
 import { useRouter } from 'next/navigation'
 import { votesType } from "@/models/jokeType";
 import React, {  useEffect, useState } from "react";
