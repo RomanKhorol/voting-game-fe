@@ -4,9 +4,11 @@ export async function DELETE(
 ) {
   const { jokeid } = await params
   try {
-    const response = await fetch(`http://localhost:5000/api/jokes/${jokeid}`, {
-      method: "DELETE",
-    })
+    const response = await fetch(`https://voting-game-be.onrender.com/api/jokes/${jokeid}`,
+      {
+        method: "DELETE",
+      }
+    )
 
     if (!response.ok) {
       throw new Error(`Failed to delete joke: ${response.statusText}`)
@@ -40,7 +42,7 @@ export async function PATCH(
     }
 
     const response = await fetch(
-      `http://localhost:5000/api/jokes/${jokeid}/votes`,
+      `https://voting-game-be.onrender.com/api/jokes/${jokeid}/votes`,
       {
         method: "PATCH",
         headers: {
