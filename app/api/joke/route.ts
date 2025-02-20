@@ -5,7 +5,9 @@ const DEFAULT_AVAILABLE_VOTES = ["😂", "👍", "❤️"]
 
 export async function GET() {
   try {
-    const response = await fetch("https://voting-game-be.onrender.com/api/jokes")
+    const response = await fetch(
+      "https://voting-game-be.onrender.com/api/jokes"
+    )
 
     if (!response.ok) {
       throw new Error(`Failed to fetch jokes: ${response.statusText}`)
@@ -37,7 +39,9 @@ export async function POST() {
     for (const joke of jokes) {
       const { question, answer } = joke
 
-      const checkResponse = await fetch("https://voting-game-be.onrender.com/api/jokes")
+      const checkResponse = await fetch(
+        "https://voting-game-be.onrender.com/api/jokes"
+      )
       const existingJokes = await checkResponse.json()
 
       const jokeExists = existingJokes.some(

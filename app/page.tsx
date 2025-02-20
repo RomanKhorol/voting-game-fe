@@ -27,7 +27,7 @@ export default function Home() {
       </main>
 
       <footer className="mt-12 text-center text-gray-500 text-sm">
-        © 2024 Created by Gordiienko
+        © 2025 Created by Gordiienko
       </footer>
     </div>
   )

@@ -4,7 +4,8 @@ export async function DELETE(
 ) {
   const { jokeid } = await params
   try {
-    const response = await fetch(`https://voting-game-be.onrender.com/api/jokes/${jokeid}`,
+    const response = await fetch(
+      `https://voting-game-be.onrender.com/api/jokes/${jokeid}`,
       {
         method: "DELETE",
       }
